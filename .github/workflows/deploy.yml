@@ -1,0 +1,55 @@
+# Je définis le nom de mon workflow d'intégration continue.
+name: Deploy to GitHub Pages
+
+# Je configure le déclenchement du script à chaque envoi de code sur la branche principale.
+on:
+  push:
+    branches:
+      - main
+
+# J'attribue les permissions nécessaires pour que le script puisse interagir avec l'infrastructure GitHub Pages.
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Je m'assure qu'un seul déploiement s'exécute simultanément pour éviter les conflits et les erreurs d'écrasement.
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout du code
+        uses: actions/checkout@v4
+
+      - name: Configuration de Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Installation des dépendances
+        # J'installe les paquets de manière stricte et reproductible en me basant sur le fichier package-lock.json.
+        run: npm ci
+
+      - name: Construction du projet
+        # Je compile mon application React et Vite pour obtenir les fichiers de production optimisés.
+        run: npm run build
+
+      - name: Configuration des pages GitHub
+        uses: actions/configure-pages@v4
+
+      - name: Téléversement de l'artefact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: './dist'
+
+      - name: Déploiement sur GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
