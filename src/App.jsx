@@ -1,122 +1,95 @@
-import { useState } from 'react'
-import heroImg from './assets/hero.png'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import './App.css'
+import { Routes, Route, useNavigate, useLocation, Navigate } from 'react-router-dom';
+import { useLanguage } from './LanguageContext';
+import './App.css';
+import Home from './components/Home';
+import About from './components/About';
+// import Projects from './components/Projects';
+// import Experience from './components/Experience';
 
-function App() {
-  const [count, setCount] = useState(0)
+export default function App() {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { t, language, setLanguage } = useLanguage();
+
+  const isActive = (path) => location.pathname.startsWith(path);
 
   return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
+    <div className="app-layout">
+      <aside className="sidebar">
+        <div className="sidebar-logo">
+          Arthur<span>Lécureur</span>
         </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
+        
+        <div className="sidebar-divider"></div>
+        <div className="menu-label">{t('nav_main_menu')}</div>
+        
+        <button className={`nav-btn ${isActive('/accueil') ? 'active' : ''}`} onClick={() => navigate('/accueil')}>
+          {t('nav_home')}
         </button>
-      </section>
+        <button className={`nav-btn ${isActive('/a-propos') ? 'active' : ''}`} onClick={() => navigate('/a-propos')}>
+          {t('nav_about')}
+        </button>
+        <button className={`nav-btn ${isActive('/projets') ? 'active' : ''}`} onClick={() => navigate('/projets')}>
+          {t('nav_projects')}
+        </button>
+        <button className={`nav-btn ${isActive('/experience') ? 'active' : ''}`} onClick={() => navigate('/experience')}>
+          {t('nav_experience')}
+        </button>
 
-      <div className="ticks"></div>
+        <div style={{ flex: 1 }}></div>
+        <div className="sidebar-divider"></div>
 
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
+        <div style={{ display: 'flex', justifyContent: 'center', gap: '1.5rem', padding: '0.5rem 0', alignItems: 'center' }}>
+          <button 
+            onClick={() => setLanguage('fr')} 
+            style={{ 
+              background: 'transparent', border: 'none', cursor: 'pointer', 
+              opacity: language === 'fr' ? 1 : 0.3,
+              transition: 'opacity 0.2s', padding: 0, display: 'flex', alignItems: 'center'
+            }}
+            title="Passer en Français"
+          >
+            <svg width="32" height="24" viewBox="0 0 900 600" style={{ borderRadius: '4px', boxShadow: '0 2px 4px rgba(0,0,0,0.2)' }}>
+              <rect width="300" height="600" fill="#002395"/>
+              <rect x="300" width="300" height="600" fill="#ffffff"/>
+              <rect x="600" width="300" height="600" fill="#ed2939"/>
+            </svg>
+          </button>
+          <button 
+            onClick={() => setLanguage('en')} 
+            style={{ 
+              background: 'transparent', border: 'none', cursor: 'pointer', 
+              opacity: language === 'en' ? 1 : 0.3,
+              transition: 'opacity 0.2s', padding: 0, display: 'flex', alignItems: 'center'
+            }}
+            title="Switch to English"
+          >
+            <svg width="32" height="24" viewBox="0 0 60 30" style={{ borderRadius: '4px', boxShadow: '0 2px 4px rgba(0,0,0,0.2)' }}>
+              <clipPath id="s">
+                <path d="M0,0 v30 h60 v-30 z"/>
+              </clipPath>
+              <clipPath id="t">
+                <path d="M30,15 h30 v15 z v-15 h-30 z h-30 v-15 z v15 h30 z"/>
+              </clipPath>
+              <g clipPath="url(#s)">
+                <path d="M0,0 v30 h60 v-30 z" fill="#012169"/>
+                <path d="M0,0 L60,30 M60,0 L0,30" stroke="#fff" strokeWidth="6"/>
+                <path d="M0,0 L60,30 M60,0 L0,30" clipPath="url(#t)" stroke="#C8102E" strokeWidth="4"/>
+                <path d="M30,0 v30 M0,15 h60" stroke="#fff" strokeWidth="10"/>
+                <path d="M30,0 v30 M0,15 h60" stroke="#C8102E" strokeWidth="6"/>
+              </g>
+            </svg>
+          </button>
         </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
+      </aside>
 
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
-  )
+      <main className="main-content">
+        <Routes>
+          <Route path="/" element={<Navigate to="/accueil" replace />} />
+          <Route path="/accueil" element={<Home />} />
+          <Route path="/a-propos" element={<About />} />
+        </Routes>
+      </main>
+    </div>
+  );
 }
-
-export default App
