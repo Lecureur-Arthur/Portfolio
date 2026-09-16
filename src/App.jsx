@@ -3,8 +3,8 @@ import { useLanguage } from './LanguageContext';
 import './App.css';
 import Home from './components/Home';
 import About from './components/About';
-// import Projects from './components/Projects';
-// import Experience from './components/Experience';
+import Experience from './components/Experience';
+// import Projects from './components/Projects'; 
 
 export default function App() {
   const navigate = useNavigate();
@@ -17,7 +17,7 @@ export default function App() {
     <div className="app-layout">
       <aside className="sidebar">
         <div className="sidebar-logo">
-          Arthur<span>Lécureur</span>
+          Arthur<span>LECUREUR</span>
         </div>
         
         <div className="sidebar-divider"></div>
@@ -85,9 +85,10 @@ export default function App() {
 
       <main className="main-content">
         <Routes>
-          <Route path="/" element={<Navigate to="/accueil" replace />} />
-          <Route path="/accueil" element={<Home />} />
-          <Route path="/a-propos" element={<About />} />
+            <Route path="/" element={<Navigate to="/accueil" replace />} />
+            <Route path="/accueil" element={<Home />} />
+            <Route path="/a-propos" element={<About />} />
+            <Route path="/experience" element={<Experience />} />
         </Routes>
       </main>
     </div>
