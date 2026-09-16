@@ -5,10 +5,5 @@ import react from '@vitejs/plugin-react'
 // L'ignorance du dossier .vs empêche les crashs liés aux fichiers verrouillés par l'éditeur.
 export default defineConfig({
   plugins: [react()],
-  base: '/Portfolio/',
-  server: {
-    watch: {
-      ignored: ['**/.vs/**']
-    }
-  }
+  base: '/Portfolio/'
 })
