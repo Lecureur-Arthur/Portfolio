@@ -2,7 +2,7 @@ import React from 'react';
 import { useLanguage } from '../LanguageContext';
 
 function Experience() {
-    // Je récupère la fonction de traduction pour l'ensemble des textes de la page.
+    // Je rï¿½cupï¿½re la fonction de traduction pour l'ensemble des textes de la page.
     const { t } = useLanguage();
 
     return (
