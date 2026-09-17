@@ -4,7 +4,13 @@ import './App.css';
 import Home from './components/Home';
 import About from './components/About';
 import Experience from './components/Experience';
-// import Projects from './components/Projects'; 
+import Terrapolis from './components/projects/Terrapolis';
+import Eddm from './components/projects/Eddm';
+import CollectoMangas from './components/projects/CollectoMangas';
+
+// J'importe le composant principal des projets ainsi que les pages de détails que je viens de créer.
+import Projects from './components/Projects'; 
+import Solas from './components/projects/Solas';
 
 export default function App() {
   const navigate = useNavigate();
@@ -89,6 +95,12 @@ export default function App() {
             <Route path="/accueil" element={<Home />} />
             <Route path="/a-propos" element={<About />} />
             <Route path="/experience" element={<Experience />} />
+            
+            <Route path="/projets" element={<Projects />} />
+            <Route path="/projets/solas" element={<Solas />} />
+            <Route path="/projets/terrapolis" element={<Terrapolis />} />
+            <Route path="/projets/eddm" element={<Eddm />} />
+            <Route path="/projets/collectomangas" element={<CollectoMangas />} />
         </Routes>
       </main>
     </div>
